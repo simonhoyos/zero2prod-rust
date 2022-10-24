@@ -11,12 +11,30 @@ path = "src/main.rs"
 name = "zero2prod"
 
 [dependencies]
+# HTTP Server Framework
 actix-web = "4"
+# Better async (Future) support
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+# Struct serialization and deserialization
 serde = { version = "1", features = ["derive"] }
+# Read config files
 config = "0.13"
+# Generate uuids
 uuid = { version = "1", features = ["v4"] }
+# Create dates
 chrono = { version = "0.4.22", default-features = false, features = ["clock"] }
+# Configure instrumentation
+tracing = { version = "0.1", features = ["log"] }
+tracing-subscriber = { version = "0.3", features = ["registry", "env-filter"] }
+tracing-bunyan-formatter = "0.3"
+tracing-log = "0.1"
+tracing-actix-web = "0.6"
+# Connect to observability providers
+# tracing-opentelemetry = "0.18"
+# Store singletons
+once_cell = "1"
+# Better handling of secret values
+secrecy = { version = "0.8", features = ["serde"] }
 
 [dependencies.sqlx]
 version = "0.6"
