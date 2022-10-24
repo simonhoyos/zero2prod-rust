@@ -23,7 +23,7 @@ async fn main() -> std::io::Result<()> {
     // With secrecy we can prevent values from being exposed in our logs. To be able to read the
     // values in the code we need to expose them.
     let connection_pool =
-        PgPool::connect(&configuration.database.connection_string().expose_secret())
+        PgPool::connect(configuration.database.connection_string().expose_secret())
             .await
             .expect("Failed to connect to Postgres.");
 
