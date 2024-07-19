@@ -1,0 +1,42 @@
+name: zero2prod
+region: fra
+services:
+  - name: zero2prod
+    dockerfile_path: Dockerfile
+    source_dir: .
+
+    github:
+      branch: main
+      deploy_on_push: false
+      repo: simonhoyos/zero2prod-rust.git
+
+    health_check:
+      http_path: /health_check
+    http_port: 8000
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    routes:
+      - path: /
+    envs:
+      - key: APP_DATABASE_USERNAME
+        scope: RUN_TIME
+        value: ${newsletter.USER_NAME}
+      - key: APP_DATABASE_PASSWORD
+        scope: RUN_TIME
+        value: ${newsletter.USER_PASSWORD}
+      - key: APP_DATABASE_HOST
+        scope: RUN_TIME
+        value: ${newsletter.USER_HOST}
+      - key: APP_DATABASE_PORT
+        scope: RUN_TIME
+        value: ${newsletter.USER_PORT}
+      - key: APP_DATABASE_DATABASE_NAME
+        scope: RUN_TIME
+        value: ${newsletter.USER_DATABASE_NAME}
+
+databases:
+  - engine: PG
+    name: newsletter
+    num_nodes: 1
+    size: db-s-dev-database
+    version: "12"
